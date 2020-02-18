@@ -47,6 +47,10 @@ $ npm run start:dev
 $ npm run start:prod
 ```
 
+### OpenAPI
+
+The Nest app generates it's own OpenAPI spec. You can check the swagger interactive docs here: [http://localhost:3000/openapi/](http://localhost:3000/openapi/)
+
 ## Test
 
 ```bash
