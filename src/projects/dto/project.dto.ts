@@ -93,7 +93,7 @@ export class GetListProjectResponse {
 
 }
 
-export class DeleteProjecttResponse {
+export class DeleteProjectResponse {
 
   @Expose()
   success: boolean = true;
@@ -103,7 +103,7 @@ export class DeleteProjecttResponse {
 
 }
 
-export class UpdateProjecttResponse {
+export class UpdateProjectResponse {
 
   @Expose()
   success: boolean = true;

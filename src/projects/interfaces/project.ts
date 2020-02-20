@@ -7,6 +7,13 @@ export interface ProjectPermissions  {
   canWrite: Array<Schema.Types.ObjectId>
 }
 
+export interface ProjectPermissionsToSave {
+  canRead: Array<String>
+
+  canWrite: Array<String>
+}
+
+
 export interface Project extends Document {
 
   owner: Schema.Types.ObjectId
@@ -55,7 +62,7 @@ export interface ProjectToSave {
 
   streams?: Array<String>;
 
-  permissions: ProjectPermissions;
+  permissions: ProjectPermissionsToSave;
 
 }
 

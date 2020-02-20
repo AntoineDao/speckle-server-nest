@@ -340,7 +340,8 @@ export class ProjectsService {
     return project.save()
   }
 
-  async downgradeUser(id: string, userId: string, user: JwtPayload): Promise<any> {
+  async removeUser(id: string, userId: string, user: JwtPayload): Promise<any> {
+    const bsonId = new Schema.Types.ObjectId(userId);
     let project: Project;
 
     try {
@@ -353,7 +354,27 @@ export class ProjectsService {
       return Promise.reject(`Cannot write to project: ${id}`)
     }
 
-    this.setUserPermission(project, userId, Permission.read)
+    let index;
+
+    if (project.canRead.includes(bsonId)) {
+      index = project.canRead.indexOf(bsonId);
+      project.canRead.splice(index, 1)
+    }
+
+    if (project.canWrite.includes(bsonId)) {
+      index = project.canWrite.indexOf(bsonId);
+      project.canWrite.splice(index, 1)
+    }
+
+    if (project.permissions.canRead.includes(bsonId)) {
+      index = project.permissions.canRead.indexOf(bsonId);
+      project.permissions.canRead.splice(index, 1)
+    }
+
+    if (project.permissions.canWrite.includes(bsonId)) {
+      index = project.permissions.canWrite.indexOf(bsonId);
+      project.permissions.canWrite.splice(index, 1)
+    }
 
     try {
       await this.applyProjectPermissionsToStreams(project, user);
@@ -363,6 +384,7 @@ export class ProjectsService {
 
     return project.save()
   }
+
 
   async upgradeUser(id: string, userId: string, user: JwtPayload): Promise<any> {
     let project: Project;
@@ -378,6 +400,30 @@ export class ProjectsService {
     }
 
     this.setUserPermission(project, userId, Permission.write)
+
+    try {
+      await this.applyProjectPermissionsToStreams(project, user);
+    } catch (err) {
+      return Promise.reject(err)
+    }
+
+    return project.save()
+  }
+
+  async downgradeUser(id: string, userId: string, user: JwtPayload): Promise<any> {
+    let project: Project;
+
+    try {
+      project = await this.findById(id, user);
+    } catch (err) {
+      return Promise.reject(err)
+    }
+
+    if (!this.authService.canWrite(user, project)) {
+      return Promise.reject(`Cannot write to project: ${id}`)
+    }
+
+    this.setUserPermission(project, userId, Permission.read)
 
     try {
       await this.applyProjectPermissionsToStreams(project, user);
