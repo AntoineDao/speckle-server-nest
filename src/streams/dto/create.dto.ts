@@ -1,6 +1,5 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { CreateObjectDto, SavedObjectDto, CreateObjectsResponse } from '../../objects/dto/create.dto';
-import { StreamDto } from './stream.dto';
 import { Expose } from 'class-transformer';
 
 export class CreateStreamDto {

@@ -34,6 +34,7 @@ export class StreamDto {
   @Expose()
   anonymousComments?: boolean
 
+  @Transform((value) => value.map(v => v.toString()), { toPlainOnly: true })
   @Expose()
   comments?: Array<String>
 
@@ -131,7 +132,7 @@ export class UpdateObjectResponse {
   success: boolean = true;
 
   @Expose()
-  message: string = 'Object updated';
+  message: string = 'Comment updated';
 
 }
 

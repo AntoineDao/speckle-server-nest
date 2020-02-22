@@ -4,7 +4,6 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model, Schema, Types } from 'mongoose';
 import * as shortid from 'shortid';
 import * as _ from 'lodash';
-import * as q2m from 'query-to-mongo';
 
 import { ObjectsService } from 'src/objects/objects.service';
 import { ClientsService } from 'src/clients/clients.service';
@@ -128,37 +127,6 @@ export class StreamsService {
     }
 
   }
-
-  // async addUser(id: string, userId: string, permission: string, user: JwtPayload): Promise<any> {
-  //   const bsonId = new Schema.Types.ObjectId(userId);
-  //   let resource: Stream;
-
-  //   if (!['read', 'write'].includes(permission)) {
-  //     return Promise.reject('Permission should be one of read or write');
-  //   }
-
-  //   try {
-  //     resource = await this.findById(id, user);
-  //   } catch (err) {
-  //     return Promise.reject(err)
-  //   }
-
-  //   if (!this.authService.canWrite(user, resource)) {
-  //     return Promise.reject(`Cannot write to Stream: ${id}`)
-  //   }
-
-  //   switch (permission) {
-  //     case 'read':
-  //       resource.canRead.includes(bsonId)? null : resource.canRead.push(bsonId)
-  //       break;
-  //     case 'write':
-  //       resource.canWrite.includes(bsonId) ? null : resource.canWrite.push(bsonId)
-  //       break;
-  //     }
-
-  //   return resource.save();
-
-  // }
 
   async getObjects(id: string, user: JwtPayload): Promise<SpeckleObject[]> {
     let resource: Stream;

@@ -97,6 +97,10 @@ export class AuthService {
       return true
     }
 
+    if (resource.private !== true) {
+      return true;
+    }
+
     return false
   }
 
@@ -105,7 +109,9 @@ export class AuthService {
       return true
     }
 
-    
+    if (resource.anonymousComments) {
+      return true
+    }
 
     return false
   }

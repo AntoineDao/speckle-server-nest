@@ -15,7 +15,6 @@ import {
 import { ApiTags, ApiBearerAuth, ApiParam, ApiBody } from '@nestjs/swagger';
 import { AuthGuard } from '@nestjs/passport';
 
-import { AuthService } from 'src/auth/auth.service';
 
 import { StreamDto, GetOneStreamResponse, GetListStreamResponse, UpdateObjectResponse } from './dto/stream.dto'
 import { CloneResponse, CloneRequest } from './dto/clone.dto';
@@ -37,7 +36,6 @@ import { GetListClientResponse, ClientDto } from 'src/clients/dto/client.dto';
 export class StreamsController {
   constructor(
     private readonly streamService: StreamsService,
-    private readonly authService: AuthService,
   ) { }
 
   @Post()
